@@ -67,8 +67,14 @@ pipeline {
             withSonarQubeEnv('sonarqube') {
                 sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
             }
+            
             timeout(time: 1, unit: 'MINUTES') {
-              waitForQualityGate abortPipeline: true
+             script{
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK'){
+                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+            }
           }
         }
     }
