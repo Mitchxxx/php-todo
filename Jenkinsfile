@@ -72,18 +72,20 @@ pipeline {
              script {
                 def qg = waitForQualityGate()
                 if (qg.status != 'OK'){
+                  currentBuild.result='ABORTED'
                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                  skipStagesToEnd()
                 }
             }
           }
         }
-        post {
-          failure {
-            echo "Quality gate failed, skipping subsequent stages"
-            currentBuild.result='ABORTED'
-            skipStagesToEnd()
-          }
-        }
+        // post {
+        //   failure {
+        //     echo "Quality gate failed, skipping subsequent stages"
+        //     currentBuild.result='ABORTED'
+        //     skipStagesToEnd()
+        //   }
+        // }
     }
 
         stage ('Package Artifact') {
