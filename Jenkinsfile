@@ -69,16 +69,15 @@ pipeline {
             }
             
             timeout(time: 1, unit: 'MINUTES') {
-             script{
+             script {
                 def qg = waitForQualityGate()
                 if (qg.status != 'OK'){
-                //  currentBuild.result = 'ABORTED'
                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
                 }
             }
           }
         }
-        post{
+        post {
           failure {
             echo "Quality gate failed, skipping subsequent stages"
             currentBuild.result = 'ABORTED'
