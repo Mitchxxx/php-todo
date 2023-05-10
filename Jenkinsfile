@@ -80,7 +80,7 @@ pipeline {
         post {
           failure {
             echo "Quality gate failed, skipping subsequent stages"
-            currentBuild.result = 'ABORTED'
+            currentBuild.result='ABORTED'
             skipStagesToEnd()
           }
         }
