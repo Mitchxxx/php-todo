@@ -79,13 +79,6 @@ pipeline {
             }
           }
         }
-        // post {
-        //   failure {
-        //     echo "Quality gate failed, skipping subsequent stages"
-        //     currentBuild.result='ABORTED'
-        //     skipStagesToEnd()
-        //   }
-        // }
     }
 
         stage ('Package Artifact') {
